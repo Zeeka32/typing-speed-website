@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    flex-direction: column;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 18px;
+        padding-bottom: 12px;
+
+        .title {
+            display: flex;
+            div {
+                position: relative;
+                h1 {
+                    font-weight: 700;
+                    margin: 0;
+                    font-size: 30px;
+                }
+
+                span {
+                    position: absolute;
+                    top: 36px;
+                    left: 4px;
+                    color: grey;
+                    font-size: 15px;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .personal-best {
+            display: flex;
+
+            img {
+                margin-right: 4px;
+            }
+
+            div {
+                display: flex;
+                align-items: center;
+                color: grey;
+                span {
+                    color: white;
+                    margin-left: 4px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  flex-direction: column;
+}
+.header .top {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 12px;
+}
+.header .top .title {
+  display: flex;
+}
+.header .top .title div {
+  position: relative;
+}
+.header .top .title div h1 {
+  font-weight: 700;
+  margin: 0;
+  font-size: 30px;
+}
+.header .top .title div span {
+  position: absolute;
+  top: 36px;
+  left: 4px;
+  color: grey;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.header .top .personal-best {
+  display: flex;
+}
+.header .top .personal-best img {
+  margin-right: 4px;
+}
+.header .top .personal-best div {
+  display: flex;
+  align-items: center;
+  color: grey;
+}
+.header .top .personal-best div span {
+  color: white;
+  margin-left: 4px;
+}/*# sourceMappingURL=header.module.css.map */
