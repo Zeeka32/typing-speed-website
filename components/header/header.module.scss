@@ -16,6 +16,14 @@
                     font-weight: 700;
                     margin: 0;
                     font-size: 30px;
+
+                    @media (max-width: 1200) {
+                        font-size: 20px;
+                    }
+
+                    @media (max-width: 700) {
+                        display: none;
+                    }
                 }
 
                 span {
@@ -25,6 +33,15 @@
                     color: grey;
                     font-size: 15px;
                     white-space: nowrap;
+
+                    @media (max-width: 1200) {
+                        font-size: 10px;
+                        top: 28px;
+                    }
+
+                    @media (max-width: 700) {
+                        display: none;
+                    }
                 }
             }
         }
@@ -40,10 +57,19 @@
                 display: flex;
                 align-items: center;
                 color: grey;
+
+                h5 {
+                    margin-right: 4px;
+                    @media (max-width: 500) {
+                        display: none;
+                    }
+                }
+
                 span {
                     color: white;
                     margin-left: 4px;
                 }
+
             }
         }
     }

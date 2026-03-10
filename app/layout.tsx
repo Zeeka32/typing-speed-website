@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { isRTL } from "react-aria-components";
+import { ClientProviders } from "./provider";
 import { Sora } from "next/font/google";
 import "./globals.css";
 
@@ -12,14 +15,18 @@ export const metadata: Metadata = {
   description: "Test your typing speed and accuracy",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const acceptLanguage = (await headers()).get("accept-language");
+  const lang = acceptLanguage?.split(/[,;]/)[0] || "en-US";
   return (
-    <html lang="en">
-      <body className={sora.className}>{children}</body>
+    <html lang={lang} dir={isRTL(lang) ? "rtl" : "ltr"}>
+      <body className={sora.className}>
+        <ClientProviders lang={lang}>{children}</ClientProviders>
+      </body>
     </html>
   );
 }

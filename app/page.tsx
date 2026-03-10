@@ -1,9 +1,17 @@
-import { Header } from "@/components/ui/header/header";
+"use client";
+import { Header } from "@/components/header/header";
+import { Results } from "@/components/results/results";
 
 export default function Home() {
   return (
-    <div className="app">
+    <main className="flex min-h-screen flex-col">
       <Header />
-    </div>
+      <Results
+        mainText="Test Completed!"
+        buttonText="Go Again"
+        icon="/assets/images/icon-completed.svg"
+        subText="Solid Run Keep Pushing to beat your high score."
+      />
+    </main>
   );
 }

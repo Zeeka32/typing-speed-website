@@ -19,6 +19,16 @@
   margin: 0;
   font-size: 30px;
 }
+@media (max-width: 1200) {
+  .header .top .title div h1 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 700) {
+  .header .top .title div h1 {
+    display: none;
+  }
+}
 .header .top .title div span {
   position: absolute;
   top: 36px;
@@ -26,6 +36,17 @@
   color: grey;
   font-size: 15px;
   white-space: nowrap;
+}
+@media (max-width: 1200) {
+  .header .top .title div span {
+    font-size: 10px;
+    top: 28px;
+  }
+}
+@media (max-width: 700) {
+  .header .top .title div span {
+    display: none;
+  }
 }
 .header .top .personal-best {
   display: flex;
@@ -37,6 +58,14 @@
   display: flex;
   align-items: center;
   color: grey;
+}
+.header .top .personal-best div h5 {
+  margin-right: 4px;
+}
+@media (max-width: 500) {
+  .header .top .personal-best div h5 {
+    display: none;
+  }
 }
 .header .top .personal-best div span {
   color: white;

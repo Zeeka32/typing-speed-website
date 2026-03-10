@@ -1,0 +1,194 @@
+.main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  padding: 4rem;
+  height: 100%;
+  overflow-x: hidden;
+  flex: 1;
+}
+@media (max-width: 1200) {
+  .main {
+    gap: 4rem;
+    padding: 3rem;
+  }
+}
+@media (max-width: 700) {
+  .main {
+    gap: 2rem;
+    padding: 1rem;
+    padding-top: 1.5rem;
+  }
+}
+.main .star1 {
+  position: absolute;
+  right: 0;
+  top: 45%;
+}
+@media (max-width: 1200) {
+  .main .star1 {
+    width: 40px;
+  }
+}
+@media (max-width: 700) {
+  .main .star1 {
+    top: 90%;
+  }
+}
+.main .star2 {
+  position: absolute;
+  left: 0;
+  top: 20%;
+}
+@media (max-width: 1200) {
+  .main .star2 {
+    width: 20px;
+  }
+}
+@media (max-width: 700) {
+  .main .star2 {
+    top: 10%;
+  }
+}
+.main .confetti {
+  position: absolute;
+  bottom: 0;
+}
+@media (max-width: 1200) {
+  .main .confetti {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1400px;
+    max-width: none;
+    height: 200px;
+    z-index: 0;
+  }
+}
+.main .success-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main .success-icon img {
+  position: relative;
+  z-index: 3;
+}
+@media (max-width: 1200) {
+  .main .success-icon img {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media (max-width: 700) {
+  .main .success-icon img {
+    width: 40px;
+    height: 40px;
+  }
+}
+.main .success-icon::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: #00522f;
+  border-radius: 100%;
+  z-index: 2;
+}
+@media (max-width: 1200) {
+  .main .success-icon::before {
+    width: 80px;
+    height: 80px;
+  }
+}
+@media (max-width: 700) {
+  .main .success-icon::before {
+    width: 60px;
+    height: 60px;
+  }
+}
+.main .success-icon::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: #11291e;
+  border-radius: 100%;
+  z-index: 1;
+}
+@media (max-width: 1200) {
+  .main .success-icon::after {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-width: 700) {
+  .main .success-icon::after {
+    width: 80px;
+    height: 80px;
+  }
+}
+.main .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main .text .main-text {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+@media (max-width: 1200) {
+  .main .text .main-text {
+    font-size: 3rem;
+  }
+}
+@media (max-width: 700) {
+  .main .text .main-text {
+    font-size: 1.5rem;
+  }
+}
+.main .text .sub-text {
+  font-size: 1.5rem;
+  text-align: center;
+  color: grey;
+}
+@media (max-width: 1200) {
+  .main .text .sub-text {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 700) {
+  .main .text .sub-text {
+    font-size: 0.8rem;
+  }
+}
+.main .results {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 700) {
+  .main .results {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.main .button {
+  color: black;
+  background-color: white;
+}
+.main .button:hover {
+  background-color: #dbdbdb;
+}
+.main .button:active {
+  background-color: #c0c0c0;
+}
+@media (max-width: 700) {
+  .main .button {
+    font-size: 1.2rem;
+  }
+}/*# sourceMappingURL=results.module.css.map */

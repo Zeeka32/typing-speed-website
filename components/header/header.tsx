@@ -25,7 +25,7 @@ export const Header = () => {
             height={25}
           />
           <div>
-            Personal best: <span> 92 WPM</span>
+            <h5>Personal</h5> best: <span> 92 WPM</span>
           </div>
         </div>
       </div>
