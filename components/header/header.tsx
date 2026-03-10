@@ -1,7 +1,9 @@
 import Image from "next/image";
 import styles from "./header.module.css";
+import { useTestProvider } from "@/context/TestContext";
 
 export const Header = () => {
+  const { state } = useTestProvider();
   return (
     <div className={styles.header}>
       <div className={styles.top}>
@@ -25,7 +27,7 @@ export const Header = () => {
             height={25}
           />
           <div>
-            <h5>Personal</h5> best: <span> 92 WPM</span>
+            <h5>Personal</h5> best: <span>{state.personalBest} WPM</span>
           </div>
         </div>
       </div>

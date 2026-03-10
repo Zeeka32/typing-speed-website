@@ -4,6 +4,7 @@ import { isRTL } from "react-aria-components";
 import { ClientProviders } from "./provider";
 import { Sora } from "next/font/google";
 import "./globals.css";
+import { TestProvider } from "@/context/TestContext";
 
 export const sora = Sora({
   weight: ["400", "600", "700"],
@@ -25,7 +26,9 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={isRTL(lang) ? "rtl" : "ltr"}>
       <body className={sora.className}>
-        <ClientProviders lang={lang}>{children}</ClientProviders>
+        <TestProvider>
+          <ClientProviders lang={lang}>{children}</ClientProviders>
+        </TestProvider>
       </body>
     </html>
   );
