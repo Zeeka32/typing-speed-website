@@ -7,7 +7,7 @@ type TestState = {
   timeLeft: number;
   difficulty: "easy" | "medium" | "hard";
   status: "idle" | "running" | "completed";
-  score_status: "first-run" | "new-best";
+  score_status: "first-run" | "new-best" | "normal-run";
   mistakes: number;
   mode: "timed" | "passage";
   personalBest: number;

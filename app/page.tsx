@@ -9,14 +9,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
-      {state.status == "completed" && (
-        <Results
-          mainText="Test Completed!"
-          buttonText="Go Again"
-          icon="/assets/images/icon-completed.svg"
-          subText="Solid Run Keep Pushing to beat your high score."
-        />
-      )}
+      {state.status == "completed" && <Results />}
     </main>
   );
 }
