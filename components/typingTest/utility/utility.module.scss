@@ -7,14 +7,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .data {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 24px;
+
+      @media (max-width: 700px) {
+        width: 100%;
+        gap: 12px;
+      }
+
       div {
         color: grey;
         font-size: 1.4rem;
+
+        @media (max-width: 700px) {
+          display: flex;
+          // width: 100%;
+          flex-direction: column;
+        }
+
         span {
           color: white;
           font-weight: 700;
@@ -26,6 +45,10 @@
     .settings {
       display: flex;
       gap: 12px;
+
+      @media (max-width: 700px) {
+        width: 100%;
+      }
       .button {
         font-size: 12px;
         height: auto;
@@ -56,12 +79,14 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        width: 100%;
         div {
           color: grey;
         }
       }
 
       .mode {
+        width: 100%;
         display: flex;
         align-items: center;
         gap: 8px;

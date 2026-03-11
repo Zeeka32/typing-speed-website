@@ -2,6 +2,8 @@ import { useTestProvider } from "@/context/TestContext";
 import { Button } from "../../ui/button/button";
 import { Separator } from "../../ui/seperator/seperator";
 import styles from "./utility.module.css";
+import { useMediaQuery } from "usehooks-ts";
+import { Select, SelectItem } from "@/components/ui/dropdown/dropdown";
 
 function formatTime(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -13,6 +15,8 @@ function formatTime(seconds: number) {
 export const Utility = () => {
   const { state, dispatch } = useTestProvider();
   const { difficulty, mode } = state;
+  const matches = useMediaQuery("(max-width: 700px)");
+
   return (
     <div className={styles.utility}>
       <div className={styles.top}>
@@ -20,9 +24,9 @@ export const Utility = () => {
           <div>
             WPM: <span>{state.wpm}</span>
           </div>
-          <Separator orientation="vertical" />
+          <Separator orientation="vertical" className="w-0.5" />
           <div>
-            Accuracy:{" "}
+            Accuracy:
             <span
               style={
                 state.status == "ready" || state.status == "idle"
@@ -37,7 +41,7 @@ export const Utility = () => {
               {state.accuracy}%
             </span>
           </div>
-          <Separator orientation="vertical" />
+          <Separator orientation="vertical" className="w-0.5" />
           <div>
             Time:
             <span
@@ -51,67 +55,94 @@ export const Utility = () => {
         </div>
         <div className={styles.settings}>
           <div className={styles.difficulty}>
-            <div>Difficulty:</div>
-            <Button
-              className={
-                difficulty == "easy"
-                  ? styles.button + " " + styles.selected
-                  : styles.button
-              }
-              onClick={() =>
-                dispatch({ type: "SET_DIFFICULTY", payload: "easy" })
-              }
-            >
-              Easy
-            </Button>
-            <Button
-              className={
-                difficulty == "medium"
-                  ? styles.button + " " + styles.selected
-                  : styles.button
-              }
-              onClick={() =>
-                dispatch({ type: "SET_DIFFICULTY", payload: "medium" })
-              }
-            >
-              Medium
-            </Button>
-            <Button
-              className={
-                difficulty == "hard"
-                  ? styles.button + " " + styles.selected
-                  : styles.button
-              }
-              onClick={() =>
-                dispatch({ type: "SET_DIFFICULTY", payload: "hard" })
-              }
-            >
-              Hard
-            </Button>
+            {matches ? (
+              <>
+                <Select label="" value={difficulty} className={styles.select}>
+                  <SelectItem>Easy</SelectItem>
+                  <SelectItem>Medium</SelectItem>
+                  <SelectItem>Hard</SelectItem>
+                </Select>
+              </>
+            ) : (
+              <>
+                <div>Difficulty:</div>
+                <Button
+                  className={
+                    difficulty == "easy"
+                      ? styles.button + " " + styles.selected
+                      : styles.button
+                  }
+                  onClick={() =>
+                    dispatch({ type: "SET_DIFFICULTY", payload: "easy" })
+                  }
+                >
+                  Easy
+                </Button>
+                <Button
+                  className={
+                    difficulty == "medium"
+                      ? styles.button + " " + styles.selected
+                      : styles.button
+                  }
+                  onClick={() =>
+                    dispatch({ type: "SET_DIFFICULTY", payload: "medium" })
+                  }
+                >
+                  Medium
+                </Button>
+                <Button
+                  className={
+                    difficulty == "hard"
+                      ? styles.button + " " + styles.selected
+                      : styles.button
+                  }
+                  onClick={() =>
+                    dispatch({ type: "SET_DIFFICULTY", payload: "hard" })
+                  }
+                >
+                  Hard
+                </Button>
+              </>
+            )}
           </div>
           <Separator orientation="vertical" />
           <div className={styles.mode}>
-            <div>Mode:</div>
-            <Button
-              className={
-                mode == "timed"
-                  ? styles.button + " " + styles.selected
-                  : styles.button
-              }
-              onClick={() => dispatch({ type: "SET_MODE", payload: "timed" })}
-            >
-              Timed (60s)
-            </Button>
-            <Button
-              className={
-                mode == "passage"
-                  ? styles.button + " " + styles.selected
-                  : styles.button
-              }
-              onClick={() => dispatch({ type: "SET_MODE", payload: "passage" })}
-            >
-              Passage
-            </Button>
+            {matches ? (
+              <>
+                <Select label="" className={styles.select}>
+                  <SelectItem>Timed (60s)</SelectItem>
+                  <SelectItem>Passage</SelectItem>
+                </Select>
+              </>
+            ) : (
+              <>
+                <div>Mode:</div>
+                <Button
+                  className={
+                    mode == "timed"
+                      ? styles.button + " " + styles.selected
+                      : styles.button
+                  }
+                  onClick={() =>
+                    dispatch({ type: "SET_MODE", payload: "timed" })
+                  }
+                >
+                  Timed (60s)
+                </Button>
+                <Button
+                  className={
+                    mode == "passage"
+                      ? styles.button + " " + styles.selected
+                      : styles.button
+                  }
+                  onClick={() =>
+                    dispatch({ type: "SET_MODE", payload: "passage" })
+                  }
+                >
+                  Passage
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
