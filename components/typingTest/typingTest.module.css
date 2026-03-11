@@ -1,0 +1,68 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+}
+.main .utility {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.main .utility .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main .utility .top .data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.main .utility .top .data div {
+  color: grey;
+  font-size: 1.4rem;
+}
+.main .utility .top .data div span {
+  color: white;
+  font-weight: 700;
+  margin-left: 4px;
+}
+.main .utility .top .settings {
+  display: flex;
+  gap: 12px;
+}
+.main .utility .top .settings .button {
+  font-size: 12px;
+  height: auto;
+  width: auto;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px grey solid;
+  background: transparent;
+  cursor: pointer;
+}
+.main .utility .top .settings .button:hover {
+  border: 1px solid hsl(214, 100%, 55%);
+  color: hsl(214, 100%, 55%);
+}
+.main .utility .top .settings .button:active {
+  border: 1px solid hsl(215, 60%, 38%);
+  color: hsl(214, 62%, 39%);
+}
+.main .utility .top .settings .difficulty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.main .utility .top .settings .difficulty div {
+  color: grey;
+}
+.main .utility .top .settings .mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.main .utility .top .settings .mode div {
+  color: grey;
+}/*# sourceMappingURL=typingTest.module.css.map */
