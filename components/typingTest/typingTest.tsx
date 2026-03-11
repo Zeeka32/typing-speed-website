@@ -9,6 +9,7 @@ export const TypingTest = () => {
   const { state, dispatch } = useTestProvider();
   const { currentPassage, currentIndex, input, status, mode } = state;
   const inputRef = useRef<HTMLInputElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const handleKeyDown = () => {
@@ -42,6 +43,20 @@ export const TypingTest = () => {
 
     return () => clearInterval(interval);
   }, [status, dispatch, mode]);
+
+  useEffect(() => {
+    if (status === "running" && textRef.current) {
+      const currentCharElement = textRef.current.children[
+        currentIndex
+      ] as HTMLElement;
+      if (currentCharElement) {
+        currentCharElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+  }, [currentIndex, status]);
 
   return (
     <div className={styles.main}>
@@ -92,7 +107,12 @@ export const TypingTest = () => {
           </div>
         )}
         <span
-          className={state.status == "idle" ? styles["blur-text"] : ""}
+          ref={textRef}
+          className={
+            state.status == "idle"
+              ? styles["blur-text"] + " " + styles.text
+              : styles.text
+          }
           onClick={() => {
             if (state.status == "running") {
               inputRef.current?.focus();
