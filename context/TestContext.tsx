@@ -241,6 +241,8 @@ const init = (initial: TestState): TestState => {
     difficulty: settings.difficulty,
     mode: settings.mode,
     timeLeft: settings.mode === "timed" ? 60 : 0,
+    score_status: settings.personalBest === 0 ? "first-run" : "normal-run",
+    currentPassage: getRandomPassage(settings.difficulty),
   };
 };
 
