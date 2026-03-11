@@ -94,6 +94,10 @@ export const TypingTest = () => {
         <span
           className={state.status == "idle" ? styles["blur-text"] : ""}
           onClick={() => {
+            if (state.status == "running") {
+              inputRef.current?.focus();
+              return;
+            }
             dispatch({ type: "PREPARE_TEST" });
             inputRef.current?.focus();
           }}
