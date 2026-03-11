@@ -2,6 +2,13 @@
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
+  width: 100%;
+  flex: 1;
+}
+.main .hidden-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 .main .utility {
   display: flex;
@@ -42,6 +49,10 @@
   background: transparent;
   cursor: pointer;
 }
+.main .utility .top .settings .button.selected {
+  border: 1px solid hsl(214, 100%, 55%);
+  color: hsl(214, 100%, 55%);
+}
 .main .utility .top .settings .button:hover {
   border: 1px solid hsl(214, 100%, 55%);
   color: hsl(214, 100%, 55%);
@@ -65,4 +76,74 @@
 }
 .main .utility .top .settings .mode div {
   color: grey;
+}
+.main .typing-area {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  gap: 36px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.main .typing-area .start-screen {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-weight: 700;
+  top: 30%;
+  z-index: 10;
+}
+.main .typing-area span {
+  margin-top: 50px;
+  font-size: 2.3rem;
+}
+.main .typing-area span.correct {
+  color: hsl(140, 63%, 57%);
+}
+.main .typing-area span.incorrect {
+  color: hsl(354, 63%, 57%);
+  text-decoration: underline;
+}
+.main .typing-area span.current {
+  background-color: #333333;
+  animation: cursor-blink 1.5s ease infinite;
+}
+@keyframes cursor-blink {
+  0% {
+    background-color: #333333;
+  }
+  50% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #333333;
+  }
+}
+.main .typing-area .blur-text {
+  filter: blur(8px);
+  transition: filter 0.3s ease-in-out;
+}
+.main .typing-area .bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 150px;
+  gap: 24px;
+}
+.main .typing-area .bottom .button {
+  background-color: #262626;
+}
+.main .typing-area .bottom .button:hover {
+  background-color: #333333;
+}
+.main .typing-area .bottom .button:active {
+  background-color: #1a1a1a;
 }/*# sourceMappingURL=typingTest.module.css.map */

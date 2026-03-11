@@ -1,16 +1,16 @@
 import styles from "./resultBox.module.scss";
+import { ReactNode } from "react";
 
 type ResultProps = {
   text: "WPM" | "Accuracy" | "Characters" | "";
-  value: string;
-  color?: string;
+  children: ReactNode;
 };
 
-export const ResultBox = ({ text = "", value = "0" }: ResultProps) => {
+export const ResultBox = ({ text = "", children }: ResultProps) => {
   return (
     <div className={styles["result-box"]}>
       <div>
-        {text} <span>{value}</span>
+        {text} <span>{children}</span>
       </div>
     </div>
   );

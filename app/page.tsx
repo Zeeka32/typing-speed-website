@@ -6,12 +6,15 @@ import { useTestProvider } from "@/context/TestContext";
 
 export default function Home() {
   const { state } = useTestProvider();
+  const { status } = state;
 
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
-      {state.status == "completed" && <Results />}
-      <TypingTest />
+      {status == "completed" && <Results />}
+      {(status == "idle" || status == "running" || status == "ready") && (
+        <TypingTest />
+      )}
     </main>
   );
 }

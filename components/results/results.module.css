@@ -181,6 +181,9 @@
   color: black;
   background-color: white;
 }
+.main .button img {
+  filter: brightness(0%);
+}
 .main .button:hover {
   background-color: #dbdbdb;
 }

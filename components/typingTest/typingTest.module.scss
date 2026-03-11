@@ -2,6 +2,14 @@
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
+  width: 100%;
+  flex: 1;
+
+  .hidden-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   .utility {
     display: flex;
@@ -41,6 +49,11 @@
           background: transparent;
           cursor: pointer;
 
+          &.selected {
+            border: 1px solid hsl(214, 100%, 55%);
+            color: hsl(214, 100%, 55%);
+          }
+
           &:hover {
             border: 1px solid hsl(214, 100%, 55%);
             color: hsl(214, 100%, 55%);
@@ -68,6 +81,86 @@
           div {
             color: grey;
           }
+        }
+      }
+    }
+  }
+
+  .typing-area {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    gap: 36px;
+    user-select: none;
+
+    .start-screen {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      font-weight: 700;
+      top: 30%;
+      z-index: 10;
+    }
+
+    span {
+      margin-top: 50px;
+      font-size: 2.3rem;
+
+      &.correct {
+        color: hsl(140, 63%, 57%);
+      }
+
+      &.incorrect {
+        color: hsl(354, 63%, 57%);
+        text-decoration: underline;
+      }
+
+      &.current {
+        background-color: #333333;
+        animation: cursor-blink 1.5s ease infinite;
+
+        @keyframes cursor-blink {
+          0% {
+            background-color: #333333;
+          }
+          50% {
+            background-color: transparent;
+          }
+          100% {
+            background-color: #333333;
+          }
+        }
+      }
+    }
+
+    .blur-text {
+      filter: blur(8px);
+      transition: filter 0.3s ease-in-out;
+    }
+
+    .bottom {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 150px;
+      gap: 24px;
+
+      .button {
+        background-color: #262626;
+
+        &:hover {
+          background-color: #333333;
+        }
+
+        &:active {
+          background-color: #1a1a1a;
         }
       }
     }

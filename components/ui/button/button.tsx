@@ -63,7 +63,6 @@ export function Button(props: ButtonProps) {
               aria-hidden
               width={20}
               height={20}
-              className="brightness-0"
             />
           )}
           {isPending && (

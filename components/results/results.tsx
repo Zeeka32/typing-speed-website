@@ -5,7 +5,7 @@ import { ResultBox } from "./resultBox/resultBox";
 import { useTestProvider } from "@/context/TestContext";
 
 export const Results = () => {
-  const { state } = useTestProvider();
+  const { state, dispatch } = useTestProvider();
 
   return (
     <div className={styles.main}>
@@ -74,11 +74,35 @@ export const Results = () => {
         </div>
       </div>
       <div className={styles.results}>
-        <ResultBox text="WPM" value="85" />
-        <ResultBox text="Accuracy" value="90%" />
-        <ResultBox text="Characters" value="125/5" />
+        <ResultBox text="WPM">{state.wpm}</ResultBox>
+        <ResultBox text="Accuracy">
+          <span
+            style={
+              state.accuracy >= 80
+                ? { color: "hsl(140, 63%, 57%)" }
+                : state.accuracy >= 50
+                  ? { color: "hsl(49, 85%, 70%)" }
+                  : { color: "hsl(354, 63%, 57%)" }
+            }
+          >
+            {state.accuracy}%
+          </span>
+        </ResultBox>
+        <ResultBox text="Characters">
+          <span style={{ color: "hsl(140, 63%, 57%)" }}>
+            {state.currentIndex - state.mistakes}
+          </span>
+          {" / "}
+          <span style={{ color: "hsl(354, 63%, 57%)" }}>{state.mistakes}</span>
+        </ResultBox>
       </div>
-      <Button className={styles.button} icon="/assets/images/icon-restart.svg">
+      <Button
+        className={styles.button}
+        icon="/assets/images/icon-restart.svg"
+        onClick={() => {
+          dispatch({ type: "RESET" });
+        }}
+      >
         {state.score_status == "first-run" || state.score_status == "new-best"
           ? "Beat This Score"
           : "Go Again"}
