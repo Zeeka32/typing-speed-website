@@ -135,6 +135,7 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
         personalBest: state.personalBest,
         mode: state.mode,
         score_status: state.score_status,
+        timeLeft: state.mode == "timed" ? 60 : 0,
       };
 
     case "SET_MODE":

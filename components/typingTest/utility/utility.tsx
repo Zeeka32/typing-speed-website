@@ -17,6 +17,17 @@ export const Utility = () => {
   const { difficulty, mode } = state;
   const matches = useMediaQuery("(max-width: 700px)");
 
+  const difficultyOptions = [
+    { key: "easy", label: "Easy" },
+    { key: "medium", label: "Medium" },
+    { key: "hard", label: "Hard" },
+  ];
+
+  const modeOptions = [
+    { key: "timed", label: "Timed (60s)" },
+    { key: "passage", label: "Passage" },
+  ];
+
   return (
     <div className={styles.utility}>
       <div className={styles.top}>
@@ -57,10 +68,21 @@ export const Utility = () => {
           <div className={styles.difficulty}>
             {matches ? (
               <>
-                <Select label="" value={difficulty} className={styles.select}>
-                  <SelectItem>Easy</SelectItem>
-                  <SelectItem>Medium</SelectItem>
-                  <SelectItem>Hard</SelectItem>
+                <Select<{ key: string; label: string }>
+                  label=""
+                  className={styles.select}
+                  items={difficultyOptions}
+                  value={difficulty}
+                  onChange={(key) =>
+                    dispatch({
+                      type: "SET_DIFFICULTY",
+                      payload: key as "easy" | "medium" | "hard",
+                    })
+                  }
+                >
+                  {(item) => (
+                    <SelectItem key={item.key}>{item.label}</SelectItem>
+                  )}
                 </Select>
               </>
             ) : (
@@ -109,9 +131,21 @@ export const Utility = () => {
           <div className={styles.mode}>
             {matches ? (
               <>
-                <Select label="" className={styles.select}>
-                  <SelectItem>Timed (60s)</SelectItem>
-                  <SelectItem>Passage</SelectItem>
+                <Select<{ key: string; label: string }>
+                  label=""
+                  className={styles.select}
+                  items={modeOptions}
+                  value={mode}
+                  onChange={(key) =>
+                    dispatch({
+                      type: "SET_MODE",
+                      payload: key as "timed" | "passage",
+                    })
+                  }
+                >
+                  {(item) => (
+                    <SelectItem key={item.key}>{item.label}</SelectItem>
+                  )}
                 </Select>
               </>
             ) : (
