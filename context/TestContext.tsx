@@ -16,8 +16,8 @@ type TestState = {
   difficulty: "easy" | "medium" | "hard";
   status: "idle" | "running" | "ready" | "completed";
   score_status: "first-run" | "new-best" | "normal-run";
-  mistakes: number;
   currentMistakes: number;
+  mistakes: number;
   mode: "timed" | "passage";
   personalBest: number;
   currentPassage: string;
