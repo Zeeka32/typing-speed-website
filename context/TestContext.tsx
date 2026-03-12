@@ -101,7 +101,7 @@ function calculateAccuracy(state: TestState) {
   const total = state.currentPassage.length;
   const correct = total - state.mistakes;
 
-  return Math.round((correct / total) * 1000) / 10;
+  return Math.max(0, Math.round((correct / total) * 1000) / 10);
 }
 
 const testReducer = (state: TestState, action: TestAction): TestState => {
