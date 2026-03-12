@@ -48,20 +48,6 @@
     }
   }
 
-  .confetti {
-    position: absolute;
-    bottom: 0;
-
-    @media (max-width: 1200) {
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1400px;
-      max-width: none;
-      height: 200px;
-      z-index: 0;
-    }
-  }
-
   .success-icon {
     position: relative;
     display: flex;

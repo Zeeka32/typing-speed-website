@@ -3,9 +3,17 @@ import styles from "./results.module.css";
 import { Button } from "../ui/button/button";
 import { ResultBox } from "./resultBox/resultBox";
 import { useTestProvider } from "@/context/TestContext";
+import { splashConfetti } from "@/utils/confetti";
+import { useEffect } from "react";
 
 export const Results = () => {
   const { state, dispatch } = useTestProvider();
+
+  useEffect(() => {
+    if (state.score_status === "new-best") {
+      splashConfetti();
+    }
+  }, [state.score_status]);
 
   return (
     <div className={styles.main}>
@@ -28,15 +36,6 @@ export const Results = () => {
             />
           </>
         ))}
-      {state.score_status == "new-best" && (
-        <Image
-          src="assets/images/pattern-confetti.svg"
-          alt="confetti"
-          width={4000}
-          height={40}
-          className={styles.confetti}
-        />
-      )}
       {(state.score_status == "first-run" ||
         state.score_status == "normal-run") && (
         <div className={styles["success-icon"]}>

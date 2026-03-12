@@ -250,8 +250,13 @@ const init = (initial: TestState): TestState => {
   const saved = localStorage.getItem("typing-settings");
 
   if (!saved) return initial;
-
-  const settings = JSON.parse(saved);
+  let settings = null;
+  try {
+    settings = JSON.parse(saved);
+  } catch (e) {
+    console.error("Failed to parse settings from localStorage:", e);
+    return initial;
+  }
 
   return {
     ...initial,
