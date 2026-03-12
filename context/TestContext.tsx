@@ -76,6 +76,34 @@ function getRandomPassage(difficulty: "easy" | "medium" | "hard") {
   return list[randomIndex].text;
 }
 
+function getInitialTime(mode: TestState["mode"]) {
+  return mode === "timed" ? 60 : 0;
+}
+
+function createNewTest(
+  difficulty: TestState["difficulty"],
+  mode: TestState["mode"],
+  personalBest: number,
+  score_status: TestState["score_status"],
+): TestState {
+  return {
+    ...initialState,
+    difficulty,
+    mode,
+    personalBest,
+    score_status,
+    currentPassage: getRandomPassage(difficulty),
+    timeLeft: getInitialTime(mode),
+  };
+}
+
+function calculateAccuracy(state: TestState) {
+  const total = state.currentPassage.length;
+  const correct = total - state.mistakes;
+
+  return Math.round((correct / total) * 1000) / 10;
+}
+
 const testReducer = (state: TestState, action: TestAction): TestState => {
   switch (action.type) {
     case "PREPARE_TEST":
@@ -85,10 +113,11 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
       return { ...state, status: "running" };
 
     case "TICK_DOWN":
-      if (state.timeLeft <= 1) {
+      if (state.timeLeft <= 1)
         return { ...state, timeLeft: 0, status: "completed" };
-      }
+
       return { ...state, timeLeft: state.timeLeft - 1 };
+
     case "TICK_UP":
       return { ...state, timeLeft: state.timeLeft + 1 };
 
@@ -100,43 +129,33 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
       };
 
     case "UPDATE_ACCURACY":
-      const acc =
-        ((state.currentPassage.length - state.mistakes) /
-          state.currentPassage.length) *
-        100;
-
       return {
         ...state,
-        accuracy: Math.round(acc * 10) / 10,
+        accuracy: calculateAccuracy(state),
       };
 
     case "UPDATE_WPM": {
-      const elapsedSeconds =
+      const elapsed =
         state.mode === "timed" ? 60 - state.timeLeft : state.timeLeft;
 
-      if (elapsedSeconds <= 0) return state;
+      if (elapsed <= 0) return state;
 
-      const elapsedMinutes = elapsedSeconds / 60;
-
-      const correctCharacters = state.currentIndex - state.currentMistakes;
-
-      const wpm = Math.round(correctCharacters / 5 / elapsedMinutes);
+      const minutes = elapsed / 60;
+      const correctChars = state.currentIndex - state.currentMistakes;
 
       return {
         ...state,
-        wpm,
+        wpm: Math.round(correctChars / 5 / minutes),
       };
     }
+
     case "SET_DIFFICULTY":
-      return {
-        ...initialState,
-        difficulty: action.payload,
-        currentPassage: getRandomPassage(action.payload),
-        personalBest: state.personalBest,
-        mode: state.mode,
-        score_status: state.score_status,
-        timeLeft: state.mode == "timed" ? 60 : 0,
-      };
+      return createNewTest(
+        action.payload,
+        state.mode,
+        state.personalBest,
+        state.score_status,
+      );
 
     case "SET_MODE":
       let time = 60;
@@ -189,15 +208,13 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
       };
 
     case "RESET":
-      return {
-        ...initialState,
-        difficulty: state.difficulty,
-        currentPassage: getRandomPassage(state.difficulty),
-        personalBest: state.personalBest,
-        timeLeft: state.mode == "timed" ? 60 : 0,
-        mode: state.mode,
-        score_status: state.personalBest === 0 ? "first-run" : "normal-run",
-      };
+      return createNewTest(
+        state.difficulty,
+        state.mode,
+        state.personalBest,
+        state.personalBest === 0 ? "first-run" : "normal-run",
+      );
+
     case "BACKSPACE":
       if (state.input.length === 0) return state;
 

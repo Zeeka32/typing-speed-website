@@ -99,6 +99,24 @@
   top: 30%;
   z-index: 10;
 }
+.main .typing-area .start-screen button {
+  cursor: pointer;
+}
+.main .typing-area .text {
+  overflow-y: auto;
+  width: 100%;
+  height: 500px;
+}
+@media (max-height: 950px) {
+  .main .typing-area .text {
+    height: 400px;
+  }
+}
+@media (max-height: 800px) {
+  .main .typing-area .text {
+    height: 300px;
+  }
+}
 .main .typing-area span {
   margin-top: 50px;
   font-size: 2.3rem;
@@ -138,8 +156,21 @@
   bottom: 150px;
   gap: 24px;
 }
+@media (max-width: 1200px) {
+  .main .typing-area .bottom {
+    position: relative;
+    bottom: 0;
+  }
+}
+@media (max-height: 900px) {
+  .main .typing-area .bottom {
+    position: relative;
+    bottom: 0;
+  }
+}
 .main .typing-area .bottom .button {
   background-color: #262626;
+  cursor: pointer;
 }
 .main .typing-area .bottom .button:hover {
   background-color: #333333;

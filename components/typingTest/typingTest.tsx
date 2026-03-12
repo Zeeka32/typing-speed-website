@@ -103,7 +103,7 @@ export const TypingTest = () => {
             >
               Start Typing Test
             </Button>
-            <p>Or click the the text and start typing</p>
+            <p>Or click the text and start typing</p>
           </div>
         )}
         <span
