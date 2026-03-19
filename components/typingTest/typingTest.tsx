@@ -1,7 +1,8 @@
+"use client";
 import { useTestProvider } from "@/context/TestContext";
 import { Button } from "../ui/button/button";
 import { Separator } from "../ui/seperator/seperator";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { Utility } from "./utility/utility";
 import styles from "./typingTest.module.scss";
 
@@ -9,7 +10,7 @@ export const TypingTest = () => {
   const { state, dispatch } = useTestProvider();
   const { currentPassage, currentIndex, input, status, mode } = state;
   const inputRef = useRef<HTMLInputElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const handleKeyDown = () => {
@@ -19,36 +20,14 @@ export const TypingTest = () => {
     dispatch({ type: "GENERATE_PASSAGE" });
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [dispatch]);
 
   useEffect(() => {
-    if (status !== "running") return;
-
-    let interval;
-    if (mode == "timed") {
-      interval = setInterval(() => {
-        dispatch({ type: "TICK_DOWN" });
-        dispatch({ type: "UPDATE_WPM" });
-      }, 1000);
-    } else {
-      interval = setInterval(() => {
-        dispatch({ type: "TICK_UP" });
-        dispatch({ type: "UPDATE_WPM" });
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [status, dispatch, mode]);
-
-  useEffect(() => {
     if (status === "running" && textRef.current) {
-      const currentCharElement = textRef.current.children[
-        currentIndex
-      ] as HTMLElement;
+      const currentCharElement = textRef.current.querySelector(
+        `.${styles.current}`,
+      );
       if (currentCharElement) {
         currentCharElement.scrollIntoView({
           behavior: "smooth",
@@ -58,13 +37,60 @@ export const TypingTest = () => {
     }
   }, [currentIndex, status]);
 
+  useEffect(() => {
+    if (status !== "running") return;
+
+    const interval = setInterval(() => {
+      dispatch({ type: mode === "timed" ? "TICK_DOWN" : "TICK_UP" });
+      dispatch({ type: "UPDATE_WPM" });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [status, dispatch, mode]);
+
+  const { segments, currentChar, remainingText } = useMemo(() => {
+    const segments: { text: string; type: "correct" | "incorrect" }[] = [];
+
+    let currentSegment = "";
+    let currentType: "correct" | "incorrect" | null = null;
+
+    for (let i = 0; i < currentIndex; i++) {
+      const isCorrect = input[i] === currentPassage[i];
+      const type = isCorrect ? "correct" : "incorrect";
+
+      if (type !== currentType) {
+        if (currentSegment) {
+          segments.push({ text: currentSegment, type: currentType! });
+        }
+        currentSegment = currentPassage[i];
+        currentType = type;
+      } else {
+        currentSegment += currentPassage[i];
+      }
+    }
+
+    if (currentSegment) {
+      segments.push({ text: currentSegment, type: currentType! });
+    }
+
+    return {
+      segments,
+      currentChar: currentPassage[currentIndex] || "",
+      remainingText: currentPassage.slice(currentIndex + 1),
+    };
+  }, [currentIndex, input, currentPassage]);
+
   return (
     <div className={styles.main}>
       <input
         ref={inputRef}
         value={input}
+        inputMode="text"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
         className={styles["hidden-input"]}
-        disabled={state.status == "idle"}
+        disabled={status === "idle"}
         onKeyDown={(e) => {
           if (e.key === "Backspace") {
             e.preventDefault();
@@ -72,17 +98,16 @@ export const TypingTest = () => {
           }
         }}
         onChange={(e) => {
-          if (currentIndex == 0) {
+          if (currentIndex === 0) {
             dispatch({ type: "START_TEST" });
           }
 
-          if (
-            e.target.value[e.target.value.length - 1] !==
-            currentPassage[currentIndex]
-          ) {
+          const lastChar = e.target.value[e.target.value.length - 1];
+
+          if (lastChar !== currentPassage[currentIndex]) {
             dispatch({ type: "ADD_MISTAKE" });
-            dispatch({ type: "UPDATE_ACCURACY" });
           }
+          dispatch({ type: "UPDATE_ACCURACY" });
 
           if (currentIndex >= currentPassage.length - 1) {
             dispatch({ type: "FINISH_TEST" });
@@ -93,7 +118,7 @@ export const TypingTest = () => {
       />
       <Utility />
       <div className={styles["typing-area"]}>
-        {state.status == "idle" && (
+        {status === "idle" && (
           <div className={styles["start-screen"]}>
             <Button
               onClick={() => {
@@ -106,15 +131,16 @@ export const TypingTest = () => {
             <p>Or click the text and start typing</p>
           </div>
         )}
-        <span
-          ref={textRef}
+
+        <p
           className={
-            state.status == "idle"
+            status === "idle"
               ? styles["blur-text"] + " " + styles.text
               : styles.text
           }
+          ref={textRef}
           onClick={() => {
-            if (state.status == "running") {
+            if (status === "running") {
               inputRef.current?.focus();
               return;
             }
@@ -122,23 +148,22 @@ export const TypingTest = () => {
             inputRef.current?.focus();
           }}
         >
-          {currentPassage.split("").map((char, index) => {
-            let className = "";
-            if (index < currentIndex) {
-              className =
-                char == input[index] ? styles.correct : styles.incorrect;
-            } else if (index == currentIndex) {
-              className = styles.current;
-            }
+          {segments.map((seg, i) => (
+            <span
+              key={i}
+              className={
+                seg.type === "correct" ? styles.correct : styles.incorrect
+              }
+            >
+              {seg.text}
+            </span>
+          ))}
 
-            return (
-              <span key={index} className={className}>
-                {char}
-              </span>
-            );
-          })}
-        </span>
-        {state.status == "running" && (
+          <span className={styles.current}>{currentChar}</span>
+          <span>{remainingText}</span>
+        </p>
+
+        {status === "running" && (
           <div className={styles.bottom}>
             <Separator orientation="horizontal" />
             <Button

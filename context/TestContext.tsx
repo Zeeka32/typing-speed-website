@@ -70,10 +70,27 @@ const initialState: TestState = {
 
 const TestContext = createContext<TestContextType | null>(null);
 
-function getRandomPassage(difficulty: "easy" | "medium" | "hard") {
+function getRandomPassage(
+  difficulty: "easy" | "medium" | "hard",
+  mode: "timed" | "passage",
+) {
   const list = passages[difficulty];
-  const randomIndex = Math.floor(Math.random() * list.length);
-  return list[randomIndex].text;
+
+  if (mode === "passage") {
+    const randomIndex = Math.floor(Math.random() * list.length);
+    return list[randomIndex].text;
+  }
+
+  const passageCount =
+    difficulty === "hard" ? 3 : difficulty === "medium" ? 4 : 8;
+  let result = "";
+
+  for (let i = 0; i < passageCount; i++) {
+    const randomIndex = Math.floor(Math.random() * list.length);
+    result += list[randomIndex].text + " ";
+  }
+
+  return result.trim();
 }
 
 function getInitialTime(mode: TestState["mode"]) {
@@ -92,16 +109,19 @@ function createNewTest(
     mode,
     personalBest,
     score_status,
-    currentPassage: getRandomPassage(difficulty),
+    currentPassage: getRandomPassage(difficulty, mode),
     timeLeft: getInitialTime(mode),
   };
 }
 
 function calculateAccuracy(state: TestState) {
-  const total = state.currentPassage.length;
-  const correct = total - state.mistakes;
+  const totalTyped = state.currentIndex;
 
-  return Math.max(0, Math.round((correct / total) * 1000) / 10);
+  if (totalTyped === 0) return 100;
+
+  const correct = totalTyped - state.mistakes;
+
+  return Math.max(0, Math.round((correct / totalTyped) * 1000) / 10);
 }
 
 const testReducer = (state: TestState, action: TestAction): TestState => {
@@ -168,7 +188,7 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
       return {
         ...initialState,
         difficulty: state.difficulty,
-        currentPassage: getRandomPassage(state.difficulty),
+        currentPassage: getRandomPassage(state.difficulty, action.payload),
         personalBest: state.personalBest,
         mode: action.payload,
         score_status: state.score_status,
@@ -237,7 +257,7 @@ const testReducer = (state: TestState, action: TestAction): TestState => {
     case "GENERATE_PASSAGE":
       return {
         ...state,
-        currentPassage: getRandomPassage(state.difficulty),
+        currentPassage: getRandomPassage(state.difficulty, state.mode),
       };
     default:
       return state;
@@ -265,7 +285,7 @@ const init = (initial: TestState): TestState => {
     mode: settings.mode,
     timeLeft: settings.mode === "timed" ? 60 : 0,
     score_status: settings.personalBest === 0 ? "first-run" : "normal-run",
-    currentPassage: getRandomPassage(settings.difficulty),
+    currentPassage: getRandomPassage(settings.difficulty, settings.mode),
   };
 };
 
