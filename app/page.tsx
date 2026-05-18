@@ -2,7 +2,7 @@
 import { Header } from "@/components/header/header";
 import { Results } from "@/components/results/results";
 import { TypingTest } from "@/components/typingTest/typingTest";
-import { useTestProvider } from "@/context/TestContext";
+import { useTestProvider } from "@/shared/context/TestContext";
 
 export default function Home() {
   const { state } = useTestProvider();

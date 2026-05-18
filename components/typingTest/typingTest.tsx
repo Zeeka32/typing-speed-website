@@ -1,5 +1,5 @@
 "use client";
-import { useTestProvider } from "@/context/TestContext";
+import { useTestProvider } from "@/shared/context/TestContext";
 import { Button } from "../ui/button/button";
 import { Separator } from "../ui/seperator/seperator";
 import { useEffect, useRef, useMemo } from "react";

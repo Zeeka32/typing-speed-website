@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-type TestState = {
+export type TestState = {
   wpm: number;
   accuracy: number;
   timeLeft: number;
@@ -25,7 +25,7 @@ type TestState = {
   input: string;
 };
 
-type TestAction =
+export type TestAction =
   | { type: "START_TEST" }
   | { type: "FINISH_TEST" }
   | { type: "SET_DIFFICULTY"; payload: TestState["difficulty"] }
@@ -46,13 +46,13 @@ export type TestContextType = {
   dispatch: Dispatch<TestAction>;
 };
 
-const passages = {
+export const passages = {
   easy: [...data.easy],
   medium: [...data.medium],
   hard: [...data.hard],
 };
 
-const initialState: TestState = {
+export const initialState: TestState = {
   wpm: 0,
   accuracy: 100,
   timeLeft: 60,
@@ -70,7 +70,7 @@ const initialState: TestState = {
 
 const TestContext = createContext<TestContextType | null>(null);
 
-function getRandomPassage(
+export function getRandomPassage(
   difficulty: "easy" | "medium" | "hard",
   mode: "timed" | "passage",
 ) {
@@ -93,11 +93,11 @@ function getRandomPassage(
   return result.trim();
 }
 
-function getInitialTime(mode: TestState["mode"]) {
+export function getInitialTime(mode: TestState["mode"]) {
   return mode === "timed" ? 60 : 0;
 }
 
-function createNewTest(
+export function createNewTest(
   difficulty: TestState["difficulty"],
   mode: TestState["mode"],
   personalBest: number,
@@ -114,7 +114,7 @@ function createNewTest(
   };
 }
 
-function calculateAccuracy(state: TestState) {
+export function calculateAccuracy(state: TestState) {
   const totalTyped = state.currentIndex;
 
   if (totalTyped === 0) return 100;
@@ -124,7 +124,10 @@ function calculateAccuracy(state: TestState) {
   return Math.max(0, Math.round((correct / totalTyped) * 1000) / 10);
 }
 
-const testReducer = (state: TestState, action: TestAction): TestState => {
+export const testReducer = (
+  state: TestState,
+  action: TestAction,
+): TestState => {
   switch (action.type) {
     case "PREPARE_TEST":
       return { ...state, status: "ready" };
