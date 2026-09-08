@@ -4,7 +4,7 @@ import { isRTL } from "react-aria-components";
 import { ClientProviders } from "./provider";
 import { Sora } from "next/font/google";
 import "./globals.css";
-import { TestProvider } from "@/context/TestContext";
+import { TestProvider } from "@/shared/context/TestContext";
 
 export const sora = Sora({
   weight: ["400", "600", "700"],

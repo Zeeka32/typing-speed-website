@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./results.module.css";
 import { Button } from "../ui/button/button";
 import { ResultBox } from "./resultBox/resultBox";
-import { useTestProvider } from "@/context/TestContext";
+import { useTestProvider } from "@/shared/context/TestContext";
 import { splashConfetti } from "@/utils/confetti";
 import { useEffect } from "react";
 

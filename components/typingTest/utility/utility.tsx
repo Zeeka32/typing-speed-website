@@ -1,4 +1,4 @@
-import { useTestProvider } from "@/context/TestContext";
+import { useTestProvider } from "@/shared/context/TestContext";
 import { Button } from "../../ui/button/button";
 import { Separator } from "../../ui/seperator/seperator";
 import styles from "./utility.module.css";

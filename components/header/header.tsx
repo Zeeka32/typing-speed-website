@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./header.module.css";
-import { useTestProvider } from "@/context/TestContext";
+import { useTestProvider } from "@/shared/context/TestContext";
 
 export const Header = () => {
   const { state } = useTestProvider();
